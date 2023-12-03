@@ -2,7 +2,14 @@ import { create } from "zustand";
 import axios from "axios";
 
 const authStore = create((set) => ({
+  loggedIn: null,
+
   loginForm: {
+    email: "",
+    password: "",
+  },
+
+  signupForm: {
     email: "",
     password: "",
   },
@@ -20,12 +27,43 @@ const authStore = create((set) => ({
     });
   },
 
-  login: async (e) => {
-    e.preventDefault();
+  updateSignupForm: (e) => {
+    const { name, value } = e.target;
 
+    set((state) => {
+      return {
+        signupForm: {
+          ...state.signupForm,
+          [name]: value,
+        },
+      };
+    });
+  },
+
+  login: async (e) => {
     const { loginForm } = authStore.getState();
 
     const res = await axios.post("/login", loginForm, {
+      withCredentials: true,
+    });
+
+    set({ loggedIn: true });
+  },
+
+  checkAuth: async () => {
+    try {
+      await axios.get("/check-auth", { withCredentials: true });
+      set({ loggedIn: true });
+    } catch (error) {
+      set({ loggedIn: false });
+    }
+  },
+
+  signup: async () => {
+    const { signupForm } = authStore.getState();
+
+    // eslint-disable-next-line no-undef
+    const res = await axios.post("/signup", signupForm, {
       withCredentials: true,
     });
     console.log(res);

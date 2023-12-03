@@ -3,6 +3,8 @@ import notesStore from "../stores/notesStore";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import NotesPage from "./NotesPage";
 import LoginPage from "../pages/LoginPage";
+import RequireAuth from "./RequireAuth";
+import SignupPage from "./SignupPage";
 
 function App() {
   const store = notesStore();
@@ -21,11 +23,22 @@ function App() {
           <li>
             <Link to="/login">Login</Link>
           </li>
+          <li>
+            <Link to="/signup">SingnUp</Link>
+          </li>
         </ul>
 
         <Routes>
-          <Route index element={<NotesPage />} />
+          <Route
+            index
+            element={
+              <RequireAuth>
+                <NotesPage />
+              </RequireAuth>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </BrowserRouter>
     </div>
