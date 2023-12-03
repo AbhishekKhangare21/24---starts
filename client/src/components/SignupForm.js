@@ -1,13 +1,17 @@
 import React from "react";
 import authStore from "../stores/authStore";
+import { useNavigate } from "react-router-dom";
+
 // import store from "../stores/authStore";
 
 const SignupForm = () => {
   const store = authStore();
+  const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    store.signup();
+    await store.signup();
+    navigate("/login");
   };
 
   return (

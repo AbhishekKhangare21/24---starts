@@ -3,6 +3,7 @@ import notesStore from "../stores/notesStore";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import NotesPage from "./NotesPage";
 import LoginPage from "../pages/LoginPage";
+import LogoutPage from "../pages/LogoutPage";
 import RequireAuth from "./RequireAuth";
 import SignupPage from "./SignupPage";
 
@@ -39,6 +40,7 @@ function App() {
           />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
         </Routes>
       </BrowserRouter>
     </div>
